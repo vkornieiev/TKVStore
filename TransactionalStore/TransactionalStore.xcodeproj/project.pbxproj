@@ -47,6 +47,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C36945BE29D2474800EFBD82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C376B3D529D2411800C6FBC6 /* TransactionalStore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TransactionalStore.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C376B3D829D2411800C6FBC6 /* TransactionalStoreApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionalStoreApp.swift; sourceTree = "<group>"; };
 		C376B3DC29D2411B00C6FBC6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -120,6 +121,7 @@
 		C376B3D729D2411800C6FBC6 /* TransactionalStore */ = {
 			isa = PBXGroup;
 			children = (
+				C36945BE29D2474800EFBD82 /* Info.plist */,
 				C376B3D829D2411800C6FBC6 /* TransactionalStoreApp.swift */,
 				C376B40229D2415E00C6FBC6 /* MVVM */,
 				C376B40E29D2416800C6FBC6 /* Utilities */,
@@ -511,7 +513,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"TransactionalStore/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_FILE = TransactionalStore/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -539,7 +541,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"TransactionalStore/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_FILE = TransactionalStore/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
