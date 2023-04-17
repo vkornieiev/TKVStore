@@ -14,6 +14,9 @@ struct TransactionalStoreViewState {
     var consoleOutput = [OutputConsoleItem]()
     var storageNestingLevel: Int = .zero
     var showConfirmDialog: Bool = false
+    
+    /// Random colors to highlight output console and nested operations inticator.
+    let colors: [Color] = Color.randomList(10)
 
     struct OutputConsoleItem: Identifiable {
         let id = UUID()

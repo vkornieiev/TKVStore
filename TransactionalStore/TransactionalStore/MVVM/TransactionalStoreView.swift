@@ -7,9 +7,13 @@
 
 import SwiftUI
 
-struct TransactionalStoreView: View {
-    @StateObject var viewModel = TransactionalStoreViewModel()
-
+struct TransactionalStoreView<VM: ViewModel>: View where VM.ViewEvent == TransactionalStoreViewEvent, VM.ViewState == TransactionalStoreViewState {
+    @ObservedObject var viewModel: VM
+    
+    init(viewModel: VM) {
+        self.viewModel = viewModel
+    }
+    
     var body: some View {
         LazyVStack(alignment: .leading, spacing: 16) {
             basicOperationsSection
@@ -26,7 +30,7 @@ struct TransactionalStoreView: View {
                             isPresented: $viewModel.state.showConfirmDialog,
                             titleVisibility: .visible) {
             Button(Constants.confirmDialogButtonTitle, role: .destructive) {
-                viewModel.confirmedAlertAction?()
+                viewModel.trigger(.onConfirmOperationAction)
             }
         }
     }
@@ -153,7 +157,7 @@ struct TransactionalStoreView: View {
                 HStack(spacing: 4) {
                     ForEach(.zero...viewModel.state.storageNestingLevel,
                             id: \.self) {
-                        Rectangle().fill(viewModel.colors[$0 % 10])
+                        Rectangle().fill(viewModel.state.colors[$0 % 10])
                             .frame(maxWidth: geo.size.width / 10)
                     }
                 }
@@ -161,31 +165,31 @@ struct TransactionalStoreView: View {
             .frame(height: 20)
         }
     }
+}
 
-    private struct Constants {
-        static let navigationBarTitle = "Transaction Store"
-        static let basicOperationsSectionTitle = "GET, SET or DELETE value by key:"
-        static let countSectionTitle = "Search occurrences count of the value:"
-        static let transactionMethodsSectionTitle = "Create nested transaction(s), commit or discard:"
-        static let enterKeyTitle = "Please enter a key"
-        static let enterValueTitle = "Please enter a value"
-        static let getButtonTitle = "GET"
-        static let setButtonTitle = "SET"
-        static let deleteButtonTitle = "DELETE"
-        static let countButtonTitle = "COUNT"
-        static let beginButtonTitle = "BEGIN"
-        static let commitButtonTitle = "COMMIT"
-        static let rollbackButtonTitle = "ROLLBACK"
-        static let errorMessagePrefix = "Error:"
-        static let clearConsoleButtonTitle = "Clear console output"
-        static let operationsIndicatorTitle = "Nested operations indicator:"
-        static let confirmDialogTitle = "Confirm operation?"
-        static let confirmDialogButtonTitle = "Confirm"
-    }
+fileprivate struct Constants {
+    static let navigationBarTitle = "Transaction Store"
+    static let basicOperationsSectionTitle = "GET, SET or DELETE value by key:"
+    static let countSectionTitle = "Search occurrences count of the value:"
+    static let transactionMethodsSectionTitle = "Create nested transaction(s), commit or discard:"
+    static let enterKeyTitle = "Please enter a key"
+    static let enterValueTitle = "Please enter a value"
+    static let getButtonTitle = "GET"
+    static let setButtonTitle = "SET"
+    static let deleteButtonTitle = "DELETE"
+    static let countButtonTitle = "COUNT"
+    static let beginButtonTitle = "BEGIN"
+    static let commitButtonTitle = "COMMIT"
+    static let rollbackButtonTitle = "ROLLBACK"
+    static let errorMessagePrefix = "Error:"
+    static let clearConsoleButtonTitle = "Clear console output"
+    static let operationsIndicatorTitle = "Nested operations indicator:"
+    static let confirmDialogTitle = "Confirm operation?"
+    static let confirmDialogButtonTitle = "Confirm"
 }
 
 struct TransactionalStoreView_Previews: PreviewProvider {
     static var previews: some View {
-        TransactionalStoreView()
+        TransactionalStoreView(viewModel: StaticViewModel(state: .init()))
     }
 }

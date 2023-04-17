@@ -14,6 +14,7 @@ enum TransactionalStoreViewEvent {
     case onBeginAction
     case onCommitAction
     case onRollbackActionTapped
+    case onConfirmOperationAction
     case onClearConsoleAction
     case onDismissKeyboard
 }

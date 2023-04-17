@@ -8,18 +8,20 @@
 import Combine
 import SwiftUI
 
-final class TransactionalStoreViewModel: ObservableObject {
+final class TransactionalStoreViewModel: ViewModel {
+    typealias ViewEvent = TransactionalStoreViewEvent
+    typealias ViewState = TransactionalStoreViewState
+    
     /// ViewState to update UI based on view model business logic.
-    @Published var state = TransactionalStoreViewState()
+    @Published var state = ViewState()
     /// A delayed action that should be perfoormed on alert confirm.
-    private(set) var confirmedAlertAction: (() -> Void)?
+    private var confirmedAlertAction: (() -> Void)?
     /// Key-Value based transaction storage.
     private let transactionStorage: TransactionalStoreProtocol
 
-    /// Random colors to highlight output console and nested operations inticator.
-    let colors: [Color] = Color.randomList(10)
+    /// Random color to highlight output console and nested operations inticator.
     private var consoleOutputColor: Color {
-        colors[state.storageNestingLevel % colors.count]
+        state.colors[state.storageNestingLevel % state.colors.count]
     }
 
     init(transactionStorage: TransactionalStoreProtocol = TransactionalStore()) {
@@ -28,7 +30,7 @@ final class TransactionalStoreViewModel: ObservableObject {
 
     /// View events that are triggered by View and handled by ViewModel.
     /// This iplementation can be enchanced in future to be extracted to protocol as a requirement for each ViewModel
-    func trigger(_ event: TransactionalStoreViewEvent) {
+    func trigger(_ event: ViewEvent) {
         switch event {
         case .onGetAction:
             guard verifyInputData(key: true, value: false) == true else { return }
@@ -111,9 +113,13 @@ final class TransactionalStoreViewModel: ObservableObject {
                 }))
             }
             state.showConfirmDialog = true
-
+        
+        case .onConfirmOperationAction:
+            confirmedAlertAction?()
+            
         case .onClearConsoleAction:
             state.consoleOutput.removeAll()
+            
         case .onDismissKeyboard:
             dismissKeyboard()
         }

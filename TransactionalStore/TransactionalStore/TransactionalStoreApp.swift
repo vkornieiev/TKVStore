@@ -11,7 +11,7 @@ import SwiftUI
 struct TransactionalStoreApp: App {
     var body: some Scene {
         WindowGroup {
-            TransactionalStoreView()
+            TransactionalStoreView(viewModel: TransactionalStoreViewModel())
         }
     }
 }
