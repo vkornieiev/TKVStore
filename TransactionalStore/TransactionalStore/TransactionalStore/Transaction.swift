@@ -19,14 +19,15 @@ final class Transaction: TransactionProtocol {
 
     func set(_ value: String, for key: String) {
         storage[key] = value
+        // Exclude the key from future delete request if present.
+        requestedUpstreamDeletions.remove(key)
     }
 
     func removeValue(for key: String) {
-        if storage.removeValue(forKey: key) == nil {
-            // If key is not presented in current transaction storage -
-            // store it to later request to remove from upstream transaction.
-            requestedUpstreamDeletions.insert(key)
-        }
+        storage.removeValue(forKey: key)
+        // If key is not presented in current transaction storage -
+        // store it to later request to remove from upstream transaction.
+        requestedUpstreamDeletions.insert(key)
     }
 
     func getCount(value: String) -> Int {

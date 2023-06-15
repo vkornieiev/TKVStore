@@ -108,6 +108,15 @@ final class TransactionalStoreTests: XCTestCase {
         expectRollbackToBe(false)
     }
     
+    func test_Override_AND_Remove_Value_From_Nested_Transaction() {
+        sut.perfrom(.set(key: "foo", value: "123"))
+        sut.perfrom(.begin)
+        sut.perfrom(.set(key: "foo", value: "456"))
+        sut.perfrom(.delete(key: "foo"))
+        expectCommitToBe(true)
+        expectValueToBe(nil, for: "foo")
+    }
+    
     private func expectValueToBe(_ expectedValue: String?, for key: String) {
         let expectation = expectation(description: "TransactionalStoreTestsExpectation")
         sut.perfrom(.get(key: key, result: { result in
